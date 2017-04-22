@@ -1,12 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Xml;
-using System.Xml.Serialization;
 
 namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 {
-    [Serializable()]
     public class VersionInfos
     {
         public String DVDProfilerVersion;
@@ -30,7 +29,7 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
         }
     }
 
-    [Serializable()]
+    [DebuggerDisplay("Name={ProgramName}, Version={ProgramVersion}")]
     public class VersionInfo
     {
         public String ProgramName;
