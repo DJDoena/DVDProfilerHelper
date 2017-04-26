@@ -28,6 +28,10 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 
                 return (s_XmlSerializer);
             }
+            set
+            {
+                s_XmlSerializer = value;
+            }
         }
 
         public static T Deserialize(String fileName)
