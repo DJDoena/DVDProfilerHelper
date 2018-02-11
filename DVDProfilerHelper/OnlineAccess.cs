@@ -36,7 +36,7 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
                 {
                     VersionInfos versionInfos;
 
-                    versionInfos = Serializer<VersionInfos>.Deserialize(stream);
+                    versionInfos = DVDProfilerSerializer<VersionInfos>.Deserialize(stream);
                     if((versionInfos.VersionInfoList != null) && (versionInfos.VersionInfoList.Length > 0))
                     {
                         foreach(VersionInfo versionInfo in versionInfos.VersionInfoList)

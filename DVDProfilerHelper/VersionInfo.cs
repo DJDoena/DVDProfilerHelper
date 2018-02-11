@@ -23,7 +23,7 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
                     xmlWriter.WriteProcessingInstruction("xml", "version=\"1.0\" encoding=\"utf-8\"");
                     xmlWriter.WriteProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"versions.xsl\"");
 
-                    Serializer<VersionInfos>.Serialize(xmlWriter, this);
+                    DVDProfilerSerializer<VersionInfos>.Serialize(xmlWriter, this);
                 }
             }
         }
