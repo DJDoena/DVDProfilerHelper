@@ -1,32 +1,30 @@
-﻿using System;
-using System.IO;
-using System.Text;
-using System.Xml;
-using System.Xml.Serialization;
-
-namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
+﻿namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 {
+    using System;
+    using System.IO;
+    using System.Text;
+    using System.Xml;
+    using System.Xml.Serialization;
+
     public static class DVDProfilerSerializer<T> where T : class, new()
     {
-        private static XmlSerializer s_XmlSerializer;
+        private static XmlSerializer _XmlSerializer;
 
-        private static readonly Encoding DefaultEncoding;
+        private static readonly Encoding _DefaultEncoding;
 
         static DVDProfilerSerializer()
-        {
-            DefaultEncoding = Encoding.UTF8;
-        }
+            => _DefaultEncoding = Encoding.UTF8;
 
         public static XmlSerializer XmlSerializer
         {
             get
             {
-                if (s_XmlSerializer == null)
+                if (_XmlSerializer == null)
                 {
-                    s_XmlSerializer = new XmlSerializer(typeof(T));
+                    _XmlSerializer = new XmlSerializer(typeof(T));
                 }
 
-                return (s_XmlSerializer);
+                return (_XmlSerializer);
             }
         }
 
@@ -34,9 +32,7 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
         {
             using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                T instance = Deserialize(fs);
-
-                return (instance);
+                return (Deserialize(fs));
             }
         }
 
@@ -60,53 +56,53 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
             , T instance
             , Encoding encoding = null)
         {
-            encoding = encoding ?? DefaultEncoding;
-
-            using (XmlTextWriter xtw = new XmlTextWriter(stream, encoding))
+            using (XmlTextWriter xtw = CreateXmlTextWriter(stream, encoding))
             {
-                xtw.Formatting = Formatting.Indented;
-                xtw.Namespaces = false;
-
                 Serialize(xtw, instance);
             }
         }
 
         public static void Serialize(XmlWriter xmlWriter
             , T instance)
-        {
-            XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-
-            ns.Add(String.Empty, String.Empty);
-
-            XmlSerializer.Serialize(xmlWriter, instance, ns);
-        }
+            => XmlSerializer.Serialize(xmlWriter, instance, CreateXmlSerializerNamespaces());
 
         public static T FromString(String text
             , Encoding encoding = null)
         {
-            encoding = encoding ?? DefaultEncoding;
-
-            using (Stream ms = new MemoryStream(encoding.GetBytes(text)))
+            using (Stream ms = new MemoryStream(EnsureEncoding(encoding).GetBytes(text)))
             {
-                T instance = Deserialize(ms);
-
-                return (instance);
+                return (Deserialize(ms));
             }
         }
 
         public static String ToString(T instance
             , Encoding encoding = null)
         {
-            encoding = encoding ?? DefaultEncoding;
-
             using (MemoryStream ms = new MemoryStream())
             {
                 Serialize(ms, instance, encoding);
 
-                String text = encoding.GetString(ms.ToArray());
-
-                return (text);
+                return (EnsureEncoding(encoding).GetString(ms.ToArray()));
             }
         }
+
+        private static XmlTextWriter CreateXmlTextWriter(Stream stream, Encoding encoding)
+            => new XmlTextWriter(stream, EnsureEncoding(encoding))
+            {
+                Formatting = Formatting.Indented,
+                Namespaces = false
+            };
+
+        private static XmlSerializerNamespaces CreateXmlSerializerNamespaces()
+        {
+            XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+
+            ns.Add(String.Empty, String.Empty);
+
+            return (ns);
+        }
+
+        private static Encoding EnsureEncoding(Encoding encoding)
+            => encoding ?? _DefaultEncoding;
     }
 }
