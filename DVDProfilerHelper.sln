@@ -1,19 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DVDProfilerHelper", "DVDProfilerHelper\DVDProfilerHelper.csproj", "{461DACCA-8EBF-4C03-AD1A-C438E4EB3B36}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{461DACCA-8EBF-4C03-AD1A-C438E4EB3B36}.Debug|x64.ActiveCfg = Debug|x64
+		{461DACCA-8EBF-4C03-AD1A-C438E4EB3B36}.Debug|x64.Build.0 = Debug|x64
 		{461DACCA-8EBF-4C03-AD1A-C438E4EB3B36}.Debug|x86.ActiveCfg = Debug|x86
 		{461DACCA-8EBF-4C03-AD1A-C438E4EB3B36}.Debug|x86.Build.0 = Debug|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E8194667-434B-4DC1-B670-84AE14E21EE7}
 	EndGlobalSection
 EndGlobal
