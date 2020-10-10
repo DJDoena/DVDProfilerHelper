@@ -6,34 +6,34 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 {
     public static class XmlConvertHelper
     {
-        public static String GetWindows1252Text(String decoded
-            , out String base64Alternate)
+        public static string GetWindows1252Text(string decoded, out string base64Alternate)
         {
-            String encoded;
-            Encoding encoding;
+            var encoding = Encoding.GetEncoding(1252);
 
-            encoding = Encoding.GetEncoding(1252);
-            encoded = encoding.GetString(encoding.GetBytes(decoded));
+            var encoded = encoding.GetString(encoding.GetBytes(decoded));
+
             base64Alternate = null;
             if (decoded.Equals(encoded, StringComparison.Ordinal) == false)
             {
                 base64Alternate = Convert.ToBase64String(Encoding.UTF8.GetBytes(decoded));
             }
+
             encoded = EscapeXml(decoded);
-            return (encoded);
+
+            return encoded;
         }
 
-        internal static String EscapeXml(String decoded)
+        internal static string EscapeXml(string decoded)
         {
-            XmlDocument doc;
-            XmlNode node;
-            String encoded;
+            var doc = new XmlDocument();
 
-            doc = new XmlDocument();
-            node = doc.CreateElement("root");
+            var node = doc.CreateElement("root");
+
             node.InnerText = decoded;
-            encoded = node.InnerXml;
-            return (encoded);
+
+            var encoded = node.InnerXml;
+
+            return encoded;
         }
     }
 }

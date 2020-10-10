@@ -7,7 +7,7 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
     public class WindowHandle : IWin32Window
     {
         [DllImport("user32.dll")]
-        static extern Int32 GetForegroundWindow();
+        static extern int GetForegroundWindow();
 
         #region IWin32Window Members
 
@@ -15,11 +15,11 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
         {
             get
             {
-                Int32 managed = GetForegroundWindow();
+                var managed = GetForegroundWindow();
 
-                IntPtr native = new IntPtr(managed);
+                var native = new IntPtr(managed);
 
-                return (native);
+                return native;
             }
         }
 

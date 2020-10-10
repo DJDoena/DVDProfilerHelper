@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Windows.Forms;
@@ -10,54 +9,42 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 {
     public static class OnlineAccess
     {
-        public static void Init(String company, String product)
-        {
-            RegistryAccess.Init(company, product);
-        }
+        public static void Init(string company, string product) => RegistryAccess.Init(company, product);
 
-        public static void CheckForNewVersion(String url, IWin32Window parent, String linkAnchor, Assembly assembly)
-        {
-            CheckForNewVersion(url, parent, linkAnchor, assembly, false);
-        }
+        public static void CheckForNewVersion(string url, IWin32Window parent, string linkAnchor, Assembly assembly) => CheckForNewVersion(url, parent, linkAnchor, assembly, false);
 
-        public static void CheckForNewVersion(String url, IWin32Window parent, String linkAnchor, Assembly assembly, Boolean silently)
+        public static void CheckForNewVersion(string url, IWin32Window parent, string linkAnchor, Assembly assembly, Boolean silently)
         {
-            WebResponse webResponse;
-
-            if(parent == null)
+            if (parent == null)
             {
                 parent = new WindowHandle();
             }
-            webResponse = null;
+
+            WebResponse webResponse = null;
             try
             {
                 webResponse = CreateSystemSettingsWebRequest(url);
-                using(Stream stream = webResponse.GetResponseStream())
+
+                using (var stream = webResponse.GetResponseStream())
                 {
-                    VersionInfos versionInfos;
+                    var versionInfos = DVDProfilerSerializer<VersionInfos>.Deserialize(stream);
 
-                    versionInfos = DVDProfilerSerializer<VersionInfos>.Deserialize(stream);
-                    if((versionInfos.VersionInfoList != null) && (versionInfos.VersionInfoList.Length > 0))
+                    if ((versionInfos.VersionInfoList != null) && (versionInfos.VersionInfoList.Length > 0))
                     {
-                        foreach(VersionInfo versionInfo in versionInfos.VersionInfoList)
+                        foreach (var versionInfo in versionInfos.VersionInfoList)
                         {
-                            String currentName;
+                            var currentName = ((AssemblyProductAttribute)((assembly.GetCustomAttributes(typeof(AssemblyProductAttribute), true))[0])).Product;
 
-                            currentName = ((AssemblyProductAttribute)((assembly
-                                .GetCustomAttributes(typeof(AssemblyProductAttribute), true))[0])).Product;
-                            if(versionInfo.ProgramName == currentName)
+                            if (versionInfo.ProgramName == currentName)
                             {
-                                String currentVersion;
+                                var currentVersion = ((AssemblyFileVersionAttribute)((assembly.GetCustomAttributes(typeof(AssemblyFileVersionAttribute), true))[0])).Version;
 
-                                currentVersion = ((AssemblyFileVersionAttribute)((assembly
-                                    .GetCustomAttributes(typeof(AssemblyFileVersionAttribute), true))[0])).Version;
-                                if(versionInfo.ProgramVersion.CompareTo(currentVersion) == 1)
+                                if (versionInfo.ProgramVersion.CompareTo(currentVersion) == 1)
                                 {
-                                    using(NewVersionAvailableForm form = new NewVersionAvailableForm(currentVersion
-                                        , versionInfo.ProgramVersion, linkAnchor))
+                                    using (var form = new NewVersionAvailableForm(currentVersion, versionInfo.ProgramVersion, linkAnchor))
                                     {
-
                                         form.ShowDialog(parent);
+
                                         return;
                                     }
                                 }
@@ -65,17 +52,17 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
                         }
                     }
                 }
-                if(silently == false)
+
+                if (silently == false)
                 {
-                    MessageBox.Show(parent, Resources.NoNewVersionAvailable, Resources.InformationHeader, MessageBoxButtons.OK
-                        , MessageBoxIcon.Information);
+                    MessageBox.Show(parent, Resources.NoNewVersionAvailable, Resources.InformationHeader, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch
             {
                 try
                 {
-                    if(webResponse != null)
+                    if (webResponse != null)
                     {
                         webResponse.Close();
                     }
@@ -83,60 +70,55 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
                 catch
                 {
                 }
-                if(silently == false)
+
+                if (silently == false)
                 {
-                    MessageBox.Show(parent, Resources.OnlineConnectionCouldNotBeEstablished, Resources.ErrorHeader, MessageBoxButtons.OK
-                        , MessageBoxIcon.Error);
+                    MessageBox.Show(parent, Resources.OnlineConnectionCouldNotBeEstablished, Resources.ErrorHeader, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
-        public static WebResponse CreateWebRequest(String targetUrl)
+        public static WebResponse CreateWebRequest(string targetUrl)
         {
-            WebRequest webRequest;
-            WebResponse webResponse;
+            var webRequest = WebRequest.Create(targetUrl);
 
-            webRequest = WebRequest.Create(targetUrl);
-            if(RegistryAccess.Proxy)
+            if (RegistryAccess.Proxy)
             {
-                webRequest.Proxy = new WebProxy(RegistryAccess.Server, (Int32)(RegistryAccess.Port));
-                if(RegistryAccess.WindowsAuthentication)
+                webRequest.Proxy = new WebProxy(RegistryAccess.Server, (int)(RegistryAccess.Port));
+
+                if (RegistryAccess.WindowsAuthentication)
                 {
                     webRequest.Proxy.Credentials = System.Net.CredentialCache.DefaultNetworkCredentials;
                 }
-                else if(RegistryAccess.CustomAuthentication)
+                else if (RegistryAccess.CustomAuthentication)
                 {
-                    if(String.IsNullOrEmpty(RegistryAccess.Domain))
+                    if (string.IsNullOrEmpty(RegistryAccess.Domain))
                     {
-                        webRequest.Proxy.Credentials = new NetworkCredential(RegistryAccess.Username
-                            , RegistryAccess.Password);
+                        webRequest.Proxy.Credentials = new NetworkCredential(RegistryAccess.Username, RegistryAccess.Password);
                     }
                     else
                     {
-                        webRequest.Proxy.Credentials = new NetworkCredential(RegistryAccess.Username
-                            , RegistryAccess.Password, RegistryAccess.Domain);
+                        webRequest.Proxy.Credentials = new NetworkCredential(RegistryAccess.Username, RegistryAccess.Password, RegistryAccess.Domain);
                     }
                 }
             }
-            webResponse = null;
+
+            WebResponse webResponse;
             try
             {
                 webResponse = webRequest.GetResponse();
             }
-            catch(WebException)
+            catch (WebException)
             {
                 throw;
             }
-            return (webResponse);
+
+            return webResponse;
         }
 
-        public static WebResponse CreateSystemSettingsWebRequest(String targetUrl
-            , CultureInfo ci = null)
+        public static WebResponse CreateSystemSettingsWebRequest(string targetUrl, CultureInfo ci = null)
         {
-            WebRequest webRequest;
-            WebResponse webResponse;
-
-            webRequest = WebRequest.Create(targetUrl);
+            var webRequest = WebRequest.Create(targetUrl);
 
             if (ci != null)
             {
@@ -147,8 +129,7 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 
             webRequest.Proxy.Credentials = System.Net.CredentialCache.DefaultNetworkCredentials;
 
-            webResponse = null;
-
+            WebResponse webResponse;
             try
             {
                 webResponse = webRequest.GetResponse();
@@ -158,47 +139,47 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
                 throw;
             }
 
-            return (webResponse);
+            return webResponse;
         }
 
         public static WebClient CreateWebClient()
         {
-            WebClient webClient;
+            var webClient = new WebClient();
 
-            webClient = new WebClient();
-            if(RegistryAccess.Proxy)
+            if (RegistryAccess.Proxy)
             {
-                webClient.Proxy = new WebProxy(RegistryAccess.Server, (Int32)(RegistryAccess.Port));
-                if(RegistryAccess.WindowsAuthentication)
+                webClient.Proxy = new WebProxy(RegistryAccess.Server, (int)RegistryAccess.Port);
+
+                if (RegistryAccess.WindowsAuthentication)
                 {
                     webClient.Proxy.Credentials = System.Net.CredentialCache.DefaultNetworkCredentials;
                 }
-                else if(RegistryAccess.CustomAuthentication)
+                else if (RegistryAccess.CustomAuthentication)
                 {
-                    if(String.IsNullOrEmpty(RegistryAccess.Domain))
+                    if (string.IsNullOrEmpty(RegistryAccess.Domain))
                     {
-                        webClient.Proxy.Credentials = new NetworkCredential(RegistryAccess.Username
-                            , RegistryAccess.Password);
+                        webClient.Proxy.Credentials = new NetworkCredential(RegistryAccess.Username, RegistryAccess.Password);
                     }
                     else
                     {
-                        webClient.Proxy.Credentials = new NetworkCredential(RegistryAccess.Username
-                            , RegistryAccess.Password, RegistryAccess.Domain);
+                        webClient.Proxy.Credentials = new NetworkCredential(RegistryAccess.Username, RegistryAccess.Password, RegistryAccess.Domain);
                     }
                 }
             }
-            return (webClient);
+
+            return webClient;
         }
 
         public static WebClient CreateSystemSettingsWebClient()
         {
-            WebClient webClient;
+            var webClient = new WebClient
+            {
+                Proxy = WebRequest.GetSystemWebProxy(),
+            };
 
-            webClient = new WebClient();
-            webClient.Proxy = WebRequest.GetSystemWebProxy();
             webClient.Proxy.Credentials = System.Net.CredentialCache.DefaultNetworkCredentials;
 
-            return (webClient);
+            return webClient;
         }
     }
 }

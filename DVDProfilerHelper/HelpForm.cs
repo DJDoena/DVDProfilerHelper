@@ -1,14 +1,11 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 {
     public partial class HelpForm : Form
     {
-        private String File;
+        private string _file;
 
         public HelpForm()
         {
@@ -17,19 +14,20 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 
         public HelpForm(String file)
         {
-            File = file;
+            _file = file;
+
             InitializeComponent();
         }
 
-        private void OnHelpFormActivated(Object sender, EventArgs e)
+        private void OnHelpFormActivated(object sender, EventArgs e)
         {
-            if(String.IsNullOrEmpty(File))
+            if (string.IsNullOrEmpty(_file))
             {
                 WebBrowser.Navigate(Application.StartupPath + @"\Readme\readme.html");
             }
             else
             {
-                WebBrowser.Navigate(File);
+                WebBrowser.Navigate(_file);
             }
         }
     }

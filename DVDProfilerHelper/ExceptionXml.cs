@@ -1,26 +1,23 @@
 using System;
-using System.Xml.Serialization;
-using System.IO;
-using System.Xml;
-using System.Text;
 
 namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 {
     [Serializable()]
     public class ExceptionXml
     {
-        public String Type;
+        public string Type;
 
-        public String Message;
+        public string Message;
 
-        public String StackTrace;
+        public string StackTrace;
 
-        public String LastDVDProfilerApiError;
+        public string LastDVDProfilerApiError;
 
         public ExceptionXml InnerException;
 
         public ExceptionXml()
-        { }
+        {
+        }
 
         public ExceptionXml(Exception exception)
         {
@@ -32,7 +29,7 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 
                 StackTrace = exception.StackTrace;
 
-                EnhancedCOMException comEx = exception as EnhancedCOMException;
+                var comEx = exception as EnhancedCOMException;
 
                 if (comEx != null)
                 {

@@ -7,97 +7,44 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 {
     public class EnhancedCOMException : COMException
     {
-        public readonly String LastApiError;
+        public string LastApiError { get; }
 
-        private readonly COMException OriginalException;
+        private readonly COMException _originalException;
 
-        public EnhancedCOMException(COMException originalException
-            , String lastApiError)
+        public EnhancedCOMException(string lastApiError, COMException originalException) : base(lastApiError, originalException)
         {
-            OriginalException = originalException;
             LastApiError = lastApiError;
+            _originalException = originalException;
         }
 
-        public override IDictionary Data
+        public override IDictionary Data => _originalException?.Data ?? base.Data;
+
+        public override int ErrorCode => _originalException?.ErrorCode ?? base.ErrorCode;
+
+        public override string HelpLink
         {
-            get
-            {
-                return (OriginalException.Data);
-            }
+            get => _originalException?.HelpLink ?? base.HelpLink;
+            set { if (_originalException != null) { _originalException.HelpLink = value; } else { base.HelpLink = value; } }
         }
 
-        public override Int32 ErrorCode
+        public override string Message => _originalException?.Message ?? base.Message;
+
+        public override Exception GetBaseException() => _originalException?.GetBaseException() ?? base.GetBaseException();
+
+        public override void GetObjectData(SerializationInfo info, StreamingContext context) { if (_originalException != null) { _originalException.GetObjectData(info, context); } else { base.GetObjectData(info, context); } }
+
+        public override string Source
         {
-            get
-            {
-                return (OriginalException.ErrorCode);
-            }
+            get => _originalException?.Source ?? base.Source;
+            set { if (_originalException != null) { _originalException.Source = value; } else { base.Source = value; } }
         }
 
-        public override String HelpLink
-        {
-            get
-            {
-                return (OriginalException.HelpLink);
-            }
-            set
-            {
-                OriginalException.HelpLink = value;
-            }
-        }
+        public override string StackTrace => _originalException?.StackTrace ?? base.StackTrace;
 
-        public override String Message
-        {
-            get
-            {
-                return (OriginalException.Message);
-            }
-        }
+        public override bool Equals(object obj) => _originalException?.Equals(obj) ?? base.Equals(obj);
 
-        public override Exception GetBaseException()
-        {
-            return (OriginalException.GetBaseException());
-        }
+        public override int GetHashCode() => _originalException?.GetHashCode() ?? base.GetHashCode();
 
-        public override void GetObjectData(SerializationInfo info
-            , StreamingContext context)
-        {
-            OriginalException.GetObjectData(info, context);
-        }
-
-        public override String Source
-        {
-            get
-            {
-                return (OriginalException.Source);
-            }
-            set
-            {
-                OriginalException.Source = value;
-            }
-        }
-
-        public override String StackTrace
-        {
-            get
-            {
-                return (OriginalException.StackTrace);
-            }
-        }
-
-        public override Boolean Equals(Object obj)
-        {
-            return (OriginalException.Equals(obj));
-        }
-
-        public override int GetHashCode()
-        {
-            return (OriginalException.GetHashCode());
-        }
-
-        public override String ToString()
-        {
-            return (OriginalException.ToString());
-        }
+        public override string ToString() => _originalException?.ToString() ?? base.ToString();
     }
 }

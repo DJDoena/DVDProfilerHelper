@@ -1,36 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 {
     public partial class NewVersionAvailableForm : Form
     {
-        private String m_CurrentVersion;
-        private String m_NewVersion;
-        private String m_LinkAnchor;
+        private string _currentVersion;
 
-        public NewVersionAvailableForm(String currentVersion, String newVersion, String linkAnchor)
+        private string _newVersion;
+
+        private string _linkAnchor;
+
+        public NewVersionAvailableForm(string currentVersion, string newVersion, string linkAnchor)
         {
-            m_CurrentVersion = currentVersion;
-            m_NewVersion = newVersion;
-            m_LinkAnchor = linkAnchor;
+            _currentVersion = currentVersion;
+            _newVersion = newVersion;
+            _linkAnchor = linkAnchor;
+
             InitializeComponent();
         }
 
-        private void OnLinkLabelLinkClicked(Object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Process.Start(LinkLabel.Text + "#" + m_LinkAnchor);
-        }
+        private void OnLinkLabelLinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => Process.Start(LinkLabel.Text + "#" + _linkAnchor);
 
-        private void OnNewVersionAvailableFormLoad(Object sender, EventArgs e)
+        private void OnNewVersionAvailableFormLoad(object sender, EventArgs e)
         {
-            CurrentVersionTextBox.Text = m_CurrentVersion;
-            NewVersionTextBox.Text = m_NewVersion;
+            CurrentVersionTextBox.Text = _currentVersion;
+            NewVersionTextBox.Text = _newVersion;
         }
     }
 }

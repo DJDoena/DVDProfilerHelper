@@ -7,23 +7,17 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 {
     public static class ProfilePhotoHelper
     {
-        public static String FileNameFromCreditName(String firstName
-            , String middleName
-            , String lastName
-            , Int32 birthYear)
+        public static string FileNameFromCreditName(string firstName, string middleName, string lastName, int birthYear)
         {
-            String fileName;
-            StringBuilder cleanName;
-            bool nameWasCleaned;
+            var fileName = lastName + "_" + firstName + "_" + middleName;
 
-            fileName = lastName + "_" + firstName + "_" + middleName;
+            var nameWasCleaned = false;
 
-            nameWasCleaned = false;
-            cleanName = new StringBuilder();
+            var cleanName = new StringBuilder();
 
-            foreach (Char c in fileName)
+            foreach (var c in fileName)
             {
-                const String InvalidChars = "<>:\"\\/|?*";
+                const string InvalidChars = "<>:\"\\/|?*";
 
                 if (InvalidChars.Contains(c.ToString()))
                 {
@@ -37,9 +31,8 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 
             if (nameWasCleaned)
             {
-                Int32 hash;
+                var hash = MiniHashFromString(fileName);
 
-                hash = MiniHashFromString(fileName);
                 hash = Math.Abs(hash);
 
                 cleanName.Append("_");
@@ -53,27 +46,23 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
                 fileName += "_" + birthYear;
             }
 
-            return (fileName);
+            return fileName;
         }
 
-        private static Int32 MiniHashFromString(String source)
+        private static int MiniHashFromString(string source)
         {
-            Int32 hash;
-            HashAlgorithm hasher;
-            Byte[] sourceBytes;
-            Byte[] hashBytes;
+            var hasher = new MD5CryptoServiceProvider();
 
-            hasher = new MD5CryptoServiceProvider();
-            hash = 0;
+            var hash = 0;
 
-            sourceBytes = Encoding.ASCII.GetBytes(source);
-            hashBytes = hasher.ComputeHash(sourceBytes);
+            var sourceBytes = Encoding.ASCII.GetBytes(source);
 
-            for (Int32 b = 0; b < hashBytes.Length; b += 4)
+            var hashBytes = hasher.ComputeHash(sourceBytes);
+
+            for (int b = 0; b < hashBytes.Length; b += 4)
             {
-                Int32 section;
+                var section = (hashBytes[b] << 24) + (hashBytes[b + 1] << 16) + (hashBytes[b + 2] << 8) + hashBytes[b + 3];
 
-                section = (hashBytes[b] << 24) + (hashBytes[b + 1] << 16) + (hashBytes[b + 2] << 8) + hashBytes[b + 3];
                 hash ^= section;
             }
 
@@ -82,10 +71,10 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
                 hash = 1;
             }
 
-            return (hash);
+            return hash;
         }
 
-        public static String CleanupFilename(String badFileName)
+        public static string CleanupFilename(string badFileName)
         {
             badFileName = badFileName.Replace(":", "-");
             badFileName = badFileName.Replace("\"", "'");
@@ -95,11 +84,13 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
             badFileName = badFileName.Replace("*", "");
             badFileName = badFileName.Replace(">", "");
             badFileName = badFileName.Replace("<", "");
-            foreach (Char ipc in Path.GetInvalidFileNameChars())
+
+            foreach (var ipc in Path.GetInvalidFileNameChars())
             {
                 badFileName = badFileName.Replace(ipc, ' ');
             }
-            return (badFileName);
+
+            return badFileName;
         }
     }
 }

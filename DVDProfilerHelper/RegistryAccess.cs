@@ -1,283 +1,283 @@
-﻿using System;
+﻿using System.Diagnostics;
 using Microsoft.Win32;
-using System.Diagnostics;
 
 namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 {
     public static class RegistryAccess
     {
-        private static String s_Company;
-        private static String s_Product;
-        private static RegistryKey s_RegKey;
+        private static string _company;
+
+        private static string _product;
+
+        private static RegistryKey _regKey;
 
         private static RegistryKey RegKey
         {
             get
             {
-                if(s_RegKey == null)
+                if (_regKey == null)
                 {
-                    s_RegKey = Registry.CurrentUser.OpenSubKey(@"Software\" + s_Company + @"\" + s_Product, true);
+                    _regKey = Registry.CurrentUser.OpenSubKey(@"Software\" + _company + @"\" + _product, true);
                 }
-                return (s_RegKey);
+
+                return _regKey;
             }
-            [DebuggerStepThrough()]
-            set
-            {
-                s_RegKey = value;
-            }
+            [DebuggerStepThrough]
+            set => _regKey = value;
         }
 
-        public static void Init(String company, String product)
+        public static void Init(string company, string product)
         {
-            s_Company = company;
-            s_Product = product;
+            _company = company;
+            _product = product;
         }
 
         private static void EnsureExistingRegKey()
         {
-            if(s_RegKey == null)
+            if (_regKey == null)
             {
-                RegKey = Registry.CurrentUser.CreateSubKey(@"Software\" + s_Company + @"\" + s_Product);
+                RegKey = Registry.CurrentUser.CreateSubKey(@"Software\" + _company + @"\" + _product);
             }
         }
 
-        public static Boolean NoProxy
+        public static bool NoProxy
         {
             get
             {
-                if(RegKey != null)
+                if (RegKey != null)
                 {
-                    String noproxyString;
-                    Boolean noproxy;
+                    var noProxyString = (string)RegKey.GetValue("NoProxy", "true");
 
-                    noproxyString = (String)(RegKey.GetValue("NoProxy", "true"));
-                    if(Boolean.TryParse(noproxyString, out noproxy))
+                    if (bool.TryParse(noProxyString, out var noProxy))
                     {
-                        return (noproxy);
+                        return noProxy;
                     }
                 }
-                return (true);
+
+                return true;
             }
             set
             {
                 EnsureExistingRegKey();
+
                 RegKey.SetValue("NoProxy", value.ToString(), RegistryValueKind.String);
             }
         }
 
-        public static Boolean Proxy
+        public static bool Proxy
         {
             get
             {
-                if(RegKey != null)
+                if (RegKey != null)
                 {
-                    String proxyString;
-                    Boolean proxy;
+                    var proxyString = (string)RegKey.GetValue("Proxy", "false");
 
-                    proxyString = (String)(RegKey.GetValue("Proxy", "false"));
-                    if(Boolean.TryParse(proxyString, out proxy))
+                    if (bool.TryParse(proxyString, out var proxy))
                     {
-                        return (proxy);
+                        return proxy;
                     }
                 }
-                return (false);
+
+                return false;
             }
             set
             {
                 EnsureExistingRegKey();
+
                 RegKey.SetValue("Proxy", value.ToString(), RegistryValueKind.String);
             }
         }
 
-        public static String Server
+        public static string Server
         {
             get
             {
-                if(RegKey != null)
+                if (RegKey != null)
                 {
-                    String serverString;
+                    var serverString = (string)RegKey.GetValue("Server", "");
 
-                    serverString = (String)(RegKey.GetValue("Server", ""));
-                    return (serverString);
+                    return serverString;
                 }
-                return (String.Empty);
+
+                return string.Empty;
             }
             set
             {
                 EnsureExistingRegKey();
+
                 RegKey.SetValue("Server", value, RegistryValueKind.String);
             }
         }
 
-        public static Decimal Port
+        public static ushort Port
         {
             get
             {
-                if(RegKey != null)
+                if (RegKey != null)
                 {
-                    String portString;
-                    Decimal port;
+                    var portString = (string)RegKey.GetValue("Port", "80");
 
-                    portString = (String)(RegKey.GetValue("Port", "80"));
-                    if(Decimal.TryParse(portString, out port))
+                    if (ushort.TryParse(portString, out var port))
                     {
-                        return (port);
+                        return port;
                     }
                 }
-                return (80);
+
+                return 80;
             }
             set
             {
                 EnsureExistingRegKey();
+
                 RegKey.SetValue("Port", value.ToString(), RegistryValueKind.String);
             }
         }
 
-        public static Boolean NoAuthentication
+        public static bool NoAuthentication
         {
             get
             {
-                if(RegKey != null)
+                if (RegKey != null)
                 {
-                    String noauthenticationString;
-                    Boolean noauthentication;
+                    var noAuthenticationString = (string)RegKey.GetValue("NoAuthentication", "true");
 
-                    noauthenticationString = (String)(RegKey.GetValue("NoAuthentication", "true"));
-                    if(Boolean.TryParse(noauthenticationString, out noauthentication))
+                    if (bool.TryParse(noAuthenticationString, out var noAuthentication))
                     {
-                        return (noauthentication);
+                        return noAuthentication;
                     }
                 }
-                return (true);
+
+                return true;
             }
             set
             {
                 EnsureExistingRegKey();
+
                 RegKey.SetValue("NoAuthentication", value.ToString(), RegistryValueKind.String);
             }
         }
 
-        public static Boolean WindowsAuthentication
+        public static bool WindowsAuthentication
         {
             get
             {
-                if(RegKey != null)
+                if (RegKey != null)
                 {
-                    String windowsauthenticationString;
-                    Boolean windowsauthentication;
+                    var windowsAuthenticationString = (string)RegKey.GetValue("WindowsAuthentication", "false");
 
-                    windowsauthenticationString = (String)(RegKey.GetValue("WindowsAuthentication", "false"));
-                    if(Boolean.TryParse(windowsauthenticationString, out windowsauthentication))
+                    if (bool.TryParse(windowsAuthenticationString, out var windowsAuthentication))
                     {
-                        return (windowsauthentication);
+                        return windowsAuthentication;
                     }
                 }
-                return (false);
+
+                return false;
             }
             set
             {
                 EnsureExistingRegKey();
+
                 RegKey.SetValue("WindowsAuthentication", value.ToString(), RegistryValueKind.String);
             }
         }
 
-        public static Boolean CustomAuthentication
+        public static bool CustomAuthentication
         {
             get
             {
-                if(RegKey != null)
+                if (RegKey != null)
                 {
-                    String customauthenticationString;
-                    Boolean customauthentication;
+                    var customAuthenticationString = (string)RegKey.GetValue("CustomAuthentication", "false");
 
-                    customauthenticationString = (String)(RegKey.GetValue("CustomAuthentication", "false"));
-                    if(Boolean.TryParse(customauthenticationString, out customauthentication))
+                    if (bool.TryParse(customAuthenticationString, out var customAuthentication))
                     {
-                        return (customauthentication);
+                        return customAuthentication;
                     }
                 }
-                return (false);
+
+                return false;
             }
             set
             {
                 EnsureExistingRegKey();
+
                 RegKey.SetValue("CustomAuthentication", value.ToString(), RegistryValueKind.String);
             }
         }
 
-        public static String Username
+        public static string Username
         {
             get
             {
-                if(RegKey != null)
+                if (RegKey != null)
                 {
-                    String usernameString;
+                    var userNameString = (string)RegKey.GetValue("Username", "");
 
-                    usernameString = (String)(RegKey.GetValue("Username", ""));
-                    return (usernameString);
+                    return userNameString;
                 }
-                return (String.Empty);
+
+                return string.Empty;
             }
             set
             {
                 EnsureExistingRegKey();
+
                 RegKey.SetValue("Username", value, RegistryValueKind.String);
             }
         }
 
-        public static String Password
+        public static string Password
         {
             get
             {
-                if(RegKey != null)
+                if (RegKey != null)
                 {
-                    String passwordString;
+                    var passwordString = (string)RegKey.GetValue("Password", "");
 
-                    passwordString = (String)(RegKey.GetValue("Password", ""));
-                    if(String.IsNullOrEmpty(passwordString) == false)
+                    if (string.IsNullOrEmpty(passwordString) == false)
                     {
-                        Object[] guidArray;
-                        String guid;
-                        String key;
-                        Byte[] guidBytes;
-                        Byte[] keyBytes;
-                        TripleDES des;
+                        var key = "{[Super]1}(Kali[2]){([Fr";//age]3)[(Listisch4)]}[(Expi5Aligetisch)]!";
 
-                        key = "{[Super]1}(Kali[2]){([Fr";//age]3)[(Listisch4)]}[(Expi5Aligetisch)]!";
-                        guidArray = typeof(RegistryAccess).Assembly.GetCustomAttributes(typeof(System.Runtime.InteropServices.GuidAttribute), false);
-                        guid = (String)(((System.Runtime.InteropServices.GuidAttribute)(guidArray[0])).Value);
-                        guidBytes = System.Text.Encoding.UTF8.GetBytes(guid.Substring(0, 24));
+                        var guidArray = typeof(RegistryAccess).Assembly.GetCustomAttributes(typeof(System.Runtime.InteropServices.GuidAttribute), false);
+
+                        var guid = ((System.Runtime.InteropServices.GuidAttribute)(guidArray[0])).Value;
+
+                        var guidBytes = System.Text.Encoding.UTF8.GetBytes(guid.Substring(0, 24));
+
                         //ivBytes = new Byte[64];
                         //guidBytes.CopyTo(ivBytes, 0);
                         //guidBytes.CopyTo(ivBytes, 28);
-                        keyBytes = System.Text.Encoding.UTF8.GetBytes(key);
-                        des = new TripleDES(keyBytes, guidBytes);
+                        var keyBytes = System.Text.Encoding.UTF8.GetBytes(key);
+
+                        var des = new TripleDES(keyBytes, guidBytes);
+
                         passwordString = des.Decrypt(passwordString);
                     }
-                    return (passwordString);
+
+                    return passwordString;
                 }
-                return (String.Empty);
+
+                return string.Empty;
             }
             set
             {
-                if(String.IsNullOrEmpty(value) == false)
+                if (string.IsNullOrEmpty(value) == false)
                 {
-                    Object[] guidArray;
-                    String guid;
-                    String key;
-                    Byte[] guidBytes;
-                    Byte[] keyBytes;
-                    TripleDES des;
+                    var key = "{[Super]1}(Kali[2]){([Fr";//age]3)[(Listisch4)]}[(Expi5Aligetisch)]!";
 
-                    key = "{[Super]1}(Kali[2]){([Fr";//age]3)[(Listisch4)]}[(Expi5Aligetisch)]!";
-                    guidArray = typeof(RegistryAccess).Assembly.GetCustomAttributes(typeof(System.Runtime.InteropServices.GuidAttribute), false);
-                    guid = (String)(((System.Runtime.InteropServices.GuidAttribute)(guidArray[0])).Value);
-                    guidBytes = System.Text.Encoding.UTF8.GetBytes(guid.Substring(0, 24));
+                    var guidArray = typeof(RegistryAccess).Assembly.GetCustomAttributes(typeof(System.Runtime.InteropServices.GuidAttribute), false);
+
+                    var guid = ((System.Runtime.InteropServices.GuidAttribute)(guidArray[0])).Value;
+
+                    var guidBytes = System.Text.Encoding.UTF8.GetBytes(guid.Substring(0, 24));
+
                     //ivBytes = new Byte[64];
                     //guidBytes.CopyTo(ivBytes, 0);
                     //guidBytes.CopyTo(ivBytes, 28);
-                    keyBytes = System.Text.Encoding.UTF8.GetBytes(key);
-                    des = new TripleDES(keyBytes, guidBytes);
+                    var keyBytes = System.Text.Encoding.UTF8.GetBytes(key);
+
+                    var des = new TripleDES(keyBytes, guidBytes);
+
                     value = des.Encrypt(value);
                 }
                 EnsureExistingRegKey();
@@ -285,42 +285,44 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
             }
         }
 
-        public static String Domain
+        public static string Domain
         {
             get
             {
-                if(RegKey != null)
+                if (RegKey != null)
                 {
-                    String domainString;
+                    var domainString = (string)RegKey.GetValue("Domain", "");
 
-                    domainString = (String)(RegKey.GetValue("Domain", ""));
-                    return (domainString);
+                    return domainString;
                 }
-                return (String.Empty);
+
+                return string.Empty;
             }
             set
             {
                 EnsureExistingRegKey();
+
                 RegKey.SetValue("Domain", value, RegistryValueKind.String);
             }
         }
 
-        public static String DataRootPath
+        public static string DataRootPath
         {
             get
             {
-                if(RegKey != null)
+                if (RegKey != null)
                 {
-                    String dataRoot;
+                    var dataRoot = (string)RegKey.GetValue("DataRoot", "");
 
-                    dataRoot = (String)(RegKey.GetValue("DataRoot", ""));
-                    return (dataRoot);
+                    return dataRoot;
                 }
-                return (String.Empty);
+
+                return string.Empty;
             }
             set
             {
                 EnsureExistingRegKey();
+
                 RegKey.SetValue("DataRoot", value, RegistryValueKind.String);
             }
         }

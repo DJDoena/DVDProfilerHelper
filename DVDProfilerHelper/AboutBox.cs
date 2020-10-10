@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Windows.Forms;
 
 namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
@@ -12,85 +8,42 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
         public AboutBox(Assembly assembly)
         {
             InitializeComponent();
-            Text = String.Format("About {0}", GetAssemblyProduct(assembly));
-            labelProductName.Text = GetAssemblyProduct(assembly);
-            labelVersion.Text = String.Format("Version {0}", GetAssemblyVersion(assembly));
-            labelCopyright.Text = GetAssemblyCopyright(assembly);
-            labelCompanyName.Text = GetAssemblyCompany(assembly);
-            textBoxDescription.Text = GetAssemblyDescription(assembly);
+
+            Text = string.Format("About {0}", GetAssemblyProduct(assembly));
+
+            ProductNameLabel.Text = GetAssemblyProduct(assembly);
+            VersionLabel.Text = string.Format("Version {0}", GetAssemblyVersion(assembly));
+            CopyrightLabel.Text = GetAssemblyCopyright(assembly);
+            CompanyNameLabel.Text = GetAssemblyCompany(assembly);
+            DescriptionTextBox.Text = GetAssemblyDescription(assembly);
         }
 
         #region Assembly Attribute Accessors
 
-        public String GetAssemblyTitle(Assembly assembly)
-        {
-            Object[] attributes;
+        public string GetAssemblyTitle(Assembly assembly) => GetAttribute<AssemblyTitleAttribute>(assembly)?.Title ?? System.IO.Path.GetFileNameWithoutExtension(assembly.CodeBase);
 
-            attributes = assembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
-            if(attributes.Length > 0)
+        public string GetAssemblyVersion(Assembly assembly) => assembly.GetName().Version.ToString();
+
+        public string GetAssemblyDescription(Assembly assembly) => GetAttribute<AssemblyDescriptionAttribute>(assembly)?.Description ?? string.Empty;
+
+        public string GetAssemblyProduct(Assembly assembly) => GetAttribute<AssemblyProductAttribute>(assembly)?.Product ?? string.Empty;
+
+        public string GetAssemblyCopyright(Assembly assembly) => GetAttribute<AssemblyCopyrightAttribute>(assembly)?.Copyright ?? string.Empty;
+
+        public string GetAssemblyCompany(Assembly assembly) => GetAttribute<AssemblyCompanyAttribute>(assembly)?.Company ?? string.Empty;
+
+        private static T GetAttribute<T>(Assembly assembly) where T : class
+        {
+            var attributes = assembly.GetCustomAttributes(typeof(T), false);
+
+            if (attributes.Length == 0)
             {
-                AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-                if(String.IsNullOrEmpty(titleAttribute.Title) == false)
-                {
-                    return (titleAttribute.Title);
-                }
+                return null;
             }
-            return (System.IO.Path.GetFileNameWithoutExtension(assembly.CodeBase));
+
+            return (T)attributes[0];
         }
 
-        public String GetAssemblyVersion(Assembly assembly)
-        {
-            return (assembly.GetName().Version.ToString());
-        }
-
-        public String GetAssemblyDescription(Assembly assembly)
-        {
-            Object[] attributes;
-
-            attributes = assembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
-            if(attributes.Length == 0)
-            {
-                return (String.Empty);
-            }
-            return (((AssemblyDescriptionAttribute)attributes[0]).Description);
-        }
-
-        public String GetAssemblyProduct(Assembly assembly)
-        {
-            Object[] attributes;
-
-            attributes = assembly.GetCustomAttributes(typeof(AssemblyProductAttribute), false);
-            if(attributes.Length == 0)
-            {
-                return (String.Empty);
-            }
-            return (((AssemblyProductAttribute)attributes[0]).Product);
-
-        }
-
-        public String GetAssemblyCopyright(Assembly assembly)
-        {
-            Object[] attributes;
-
-            attributes = assembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
-            if(attributes.Length == 0)
-            {
-                return (String.Empty);
-            }
-            return (((AssemblyCopyrightAttribute)attributes[0]).Copyright);
-        }
-
-        public String GetAssemblyCompany(Assembly assembly)
-        {
-            Object[] attributes;
-
-            attributes = assembly.GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
-            if(attributes.Length == 0)
-            {
-                return (String.Empty);
-            }
-            return (((AssemblyCompanyAttribute)attributes[0]).Company);
-        }
         #endregion
     }
 }

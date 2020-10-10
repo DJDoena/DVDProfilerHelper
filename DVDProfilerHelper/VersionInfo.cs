@@ -8,15 +8,15 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 {
     public class VersionInfos
     {
-        public String DVDProfilerVersion;
+        public string DVDProfilerVersion;
 
         public VersionInfo[] VersionInfoList;
 
-        public void Serialize(String fileName)
+        public void Serialize(string fileName)
         {
-            using (FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None))
+            using (var fs = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None))
             {
-                using (XmlTextWriter xmlWriter = new XmlTextWriter(fs, Encoding.UTF8))
+                using (var xmlWriter = new XmlTextWriter(fs, Encoding.UTF8))
                 {
                     xmlWriter.Formatting = Formatting.Indented;
 
@@ -32,9 +32,9 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
     [DebuggerDisplay("Name={ProgramName}, Version={ProgramVersion}")]
     public class VersionInfo
     {
-        public String ProgramName;
+        public string ProgramName;
 
-        public String ProgramVersion;
+        public string ProgramVersion;
 
         public DateTime Date;
     }
