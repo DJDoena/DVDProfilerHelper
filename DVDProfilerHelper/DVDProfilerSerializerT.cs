@@ -76,11 +76,13 @@
             }
         }
 
-        private static XmlTextWriter CreateXmlTextWriter(Stream stream, Encoding encoding) => new XmlTextWriter(stream, EnsureEncoding(encoding))
+        private static XmlWriter CreateXmlTextWriter(Stream stream, Encoding encoding) => XmlWriter.Create(stream, new XmlWriterSettings()
         {
-            Formatting = Formatting.Indented,
-            Namespaces = false
-        };
+            CheckCharacters = true,
+            Encoding = EnsureEncoding(encoding),
+            Indent = true,
+            NamespaceHandling = NamespaceHandling.OmitDuplicates,
+        });
 
         private static XmlSerializerNamespaces CreateXmlSerializerNamespaces()
         {
