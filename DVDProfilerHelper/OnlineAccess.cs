@@ -33,13 +33,13 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
                     {
                         foreach (var versionInfo in versionInfos.VersionInfoList)
                         {
-                            var currentName = ((AssemblyProductAttribute)((assembly.GetCustomAttributes(typeof(AssemblyProductAttribute), true))[0])).Product;
+                            var currentName = ((AssemblyProductAttribute)assembly.GetCustomAttributes(typeof(AssemblyProductAttribute), true)[0]).Product;
 
                             if (versionInfo.ProgramName == currentName)
                             {
-                                var currentVersion = ((AssemblyFileVersionAttribute)((assembly.GetCustomAttributes(typeof(AssemblyFileVersionAttribute), true))[0])).Version;
+                                var currentVersion = ((AssemblyFileVersionAttribute)assembly.GetCustomAttributes(typeof(AssemblyFileVersionAttribute), true)[0]).Version;
 
-                                if (versionInfo.ProgramVersion.CompareTo(currentVersion) == 1)
+                                if (new Version(versionInfo.ProgramVersion) > new Version(currentVersion))
                                 {
                                     using (var form = new NewVersionAvailableForm(currentVersion, versionInfo.ProgramVersion, linkAnchor))
                                     {
