@@ -22,7 +22,7 @@
     <file src="bin\x86\Release\DoenaSoft.DVDProfilerHelper.xml" target="build\x86\DoenaSoft.DVDProfilerHelper.xml" />
     <file src="bin\x86\Release\de\DoenaSoft.DVDProfilerHelper.resources.dll" target="build\x86\de\DoenaSoft.DVDProfilerHelper.resources.dll" />
     
-    <file src="DoenaSoft.DVDProfilerHelper.props" target="build\net452" />
+    <file src="DoenaSoft.DVDProfilerHelper.targets" target="build\net452" />
     <file src="djdsoft.png" target="images\" />
 </files>
 </package>
