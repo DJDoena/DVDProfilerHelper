@@ -134,7 +134,7 @@
     <EmbeddedResource Include="Properties\Resources.de.resx">
       <DependentUpon>Resources.resx</DependentUpon>
     </EmbeddedResource>
-    <None Include="DoenaSoft.DVDProfilerHelper.targets" />
+    <None Include="DoenaSoft.DVDProfilerHelper.props" />
     <None Include="DVDProfilerHelper.nuspec" />
     <None Include="DVDProfilerHelper.snk" />
     <None Include="Resources\djdsoft.ico" />
