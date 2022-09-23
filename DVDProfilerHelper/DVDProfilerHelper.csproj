@@ -135,7 +135,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </EmbeddedResource>
     <None Include="DVDProfilerHelper.nuspec" />
-    <None Include="DVDProfilerHelper.props" />
+    <None Include="DoenaSoft.DVDProfilerHelper.props" />
     <None Include="DVDProfilerHelper.snk" />
     <None Include="Resources\djdsoft.ico" />
     <None Include="Resources\doener.jpg" />
@@ -166,7 +166,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>  
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
