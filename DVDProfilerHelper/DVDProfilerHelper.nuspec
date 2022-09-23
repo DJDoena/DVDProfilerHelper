@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>DoenaSoft.DVDProfilerHelper</id>
-    <version>2.2.5</version>
+    <version>2.2.6</version>
     <title>DoenaSoft.DVDProfilerHelper</title>
     <authors>DJ Doena</authors>
     <icon>images\djdsoft.png</icon>
@@ -16,8 +16,10 @@
   <files>
     <file src="bin\x64\Release\DoenaSoft.DVDProfilerHelper.dll" target="lib\net452\x64\DoenaSoft.DVDProfilerHelper.dll" />
     <file src="bin\x64\Release\DoenaSoft.DVDProfilerHelper.xml" target="lib\net452\x64\DoenaSoft.DVDProfilerHelper.xml" />
-    <file src="bin\x86\Release\DoenaSoft.DVDProfilerHelper.dll" target="lib\net452\x86\DoenaSoft.DVDProfilerHelper.dll" />
-    <file src="bin\x86\Release\DoenaSoft.DVDProfilerHelper.xml" target="lib\net452\x86\DoenaSoft.DVDProfilerHelper.xml" />
+    
+<!--    <file src="bin\x86\Release\DoenaSoft.DVDProfilerHelper.dll" target="lib\net452\x86\DoenaSoft.DVDProfilerHelper.dll" />
+    <file src="bin\x86\Release\DoenaSoft.DVDProfilerHelper.xml" target="lib\net452\x86\DoenaSoft.DVDProfilerHelper.xml" />-->
+    
     <file src="DoenaSoft.DVDProfilerHelper.props" target="build\net452" />
     <file src="djdsoft.png" target="images\" />
 </files>

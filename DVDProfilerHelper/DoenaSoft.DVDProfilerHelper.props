@@ -4,8 +4,8 @@
     <Reference Include="DoenaSoft.DVDProfilerHelper" Condition="'$(Platform)' == 'x86'">
       <HintPath>$(MSBuildThisFileDirectory)..\..\lib\net452\x86\DoenaSoft.DVDProfilerHelper.dll</HintPath>
     </Reference>
-    <Reference Include="DoenaSoft.DVDProfilerHelper" Condition="'$(Platform)' == 'x64'">
+    <!--<Reference Include="DoenaSoft.DVDProfilerHelper" Condition="'$(Platform)' == 'x64'">
       <HintPath>$(MSBuildThisFileDirectory)..\..\lib\net452\x64\DoenaSoft.DVDProfilerHelper.dll</HintPath>
-    </Reference>
+    </Reference>-->
   </ItemGroup>
 </Project>
