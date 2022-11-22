@@ -62,10 +62,8 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
             {
                 try
                 {
-                    if (webResponse != null)
-                    {
-                        webResponse.Close();
-                    }
+                    webResponse?.Close();
+                    webResponse?.Dispose();
                 }
                 catch
                 {
@@ -84,7 +82,7 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 
             if (RegistryAccess.Proxy)
             {
-                webRequest.Proxy = new WebProxy(RegistryAccess.Server, (int)(RegistryAccess.Port));
+                webRequest.Proxy = new WebProxy(RegistryAccess.Server, RegistryAccess.Port);
 
                 if (RegistryAccess.WindowsAuthentication)
                 {
@@ -122,7 +120,9 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 
             if (ci != null)
             {
-                webRequest.Headers.Add("Accept-Language: " + ci.Name);
+                var acceptLanguage = ci.TwoLetterISOLanguageName.ToLower();
+
+                webRequest.Headers["Accept-Language"] = acceptLanguage;
             }
 
             webRequest.Proxy = WebRequest.GetSystemWebProxy();
@@ -148,7 +148,7 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 
             if (RegistryAccess.Proxy)
             {
-                webClient.Proxy = new WebProxy(RegistryAccess.Server, (int)RegistryAccess.Port);
+                webClient.Proxy = new WebProxy(RegistryAccess.Server, RegistryAccess.Port);
 
                 if (RegistryAccess.WindowsAuthentication)
                 {
