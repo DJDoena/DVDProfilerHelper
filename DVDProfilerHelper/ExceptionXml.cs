@@ -1,8 +1,9 @@
 using System;
+using System.Linq;
 
 namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 {
-    [Serializable()]
+    [Serializable]
     public class ExceptionXml
     {
         public string Type;
@@ -14,6 +15,8 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
         public string LastDVDProfilerApiError;
 
         public ExceptionXml InnerException;
+
+        public ExceptionXml[] InnerExceptions;
 
         public ExceptionXml()
         {
@@ -29,14 +32,16 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 
                 StackTrace = exception.StackTrace;
 
-                var comEx = exception as EnhancedCOMException;
-
-                if (comEx != null)
+                if (exception is EnhancedCOMException comEx)
                 {
                     LastDVDProfilerApiError = comEx.LastApiError;
                 }
 
-                if (exception.InnerException != null)
+                if (exception is AggregateException aggrEx && aggrEx.InnerExceptions?.Count > 0)
+                {
+                    InnerExceptions = aggrEx.InnerExceptions.Select(ex => new ExceptionXml(ex)).ToArray();
+                }
+                else if (exception.InnerException != null)
                 {
                     InnerException = new ExceptionXml(exception.InnerException);
                 }
