@@ -114,32 +114,46 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
             return webResponse;
         }
 
-        public static WebResponse CreateSystemSettingsWebRequest(string targetUrl, CultureInfo ci = null)
+        public static WebResponse CreateSystemSettingsWebRequest(string targetUrl, CultureInfo cultureInfo = null)
         {
             var webRequest = WebRequest.Create(targetUrl);
 
-            if (ci != null)
+            if (cultureInfo != null)
             {
-                var acceptLanguage = ci.TwoLetterISOLanguageName.ToLower();
+                var acceptLanguage = cultureInfo.TwoLetterISOLanguageName.ToLower();
 
                 webRequest.Headers["Accept-Language"] = acceptLanguage;
             }
 
             webRequest.Proxy = WebRequest.GetSystemWebProxy();
+            webRequest.Proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
 
-            webRequest.Proxy.Credentials = System.Net.CredentialCache.DefaultNetworkCredentials;
-
-            WebResponse webResponse;
             try
             {
-                webResponse = webRequest.GetResponse();
+                var webResponse = webRequest.GetResponse();
+
+                return webResponse;
             }
-            catch (WebException)
+            catch (WebException webEx)
             {
+                if (webEx.Message?.Contains("308") == true)
+                {
+                    var redirectTo = webEx.Response?.Headers["Location"];
+
+                    if (!string.IsNullOrEmpty(redirectTo))
+                    {
+                        var targetUri = new Uri(targetUrl);
+
+                        var newTargetUrl = $"{targetUri.Scheme}://{targetUri.Host}{redirectTo}";
+
+                        var webResponse = CreateSystemSettingsWebRequest(newTargetUrl, cultureInfo);
+
+                        return webResponse;
+                    }
+                }
+
                 throw;
             }
-
-            return webResponse;
         }
 
         public static WebClient CreateWebClient()
@@ -152,7 +166,7 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 
                 if (RegistryAccess.WindowsAuthentication)
                 {
-                    webClient.Proxy.Credentials = System.Net.CredentialCache.DefaultNetworkCredentials;
+                    webClient.Proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
                 }
                 else if (RegistryAccess.CustomAuthentication)
                 {
