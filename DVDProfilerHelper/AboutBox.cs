@@ -20,7 +20,7 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 
         #region Assembly Attribute Accessors
 
-        public string GetAssemblyTitle(Assembly assembly) => GetAttribute<AssemblyTitleAttribute>(assembly)?.Title ?? System.IO.Path.GetFileNameWithoutExtension(assembly.CodeBase);
+        public string GetAssemblyTitle(Assembly assembly) => GetAttribute<AssemblyTitleAttribute>(assembly)?.Title ?? System.IO.Path.GetFileNameWithoutExtension(assembly.Location);
 
         public string GetAssemblyVersion(Assembly assembly) => assembly.GetName().Version.ToString();
 

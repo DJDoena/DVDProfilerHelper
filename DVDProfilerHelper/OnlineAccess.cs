@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Globalization;
 using System.Net;
+using System.Net.Http;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using DoenaSoft.DVDProfiler.DVDProfilerHelper.Properties;
 
@@ -11,21 +13,25 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
     {
         public static void Init(string company, string product) => RegistryAccess.Init(company, product);
 
-        public static void CheckForNewVersion(string url, IWin32Window parent, string linkAnchor, Assembly assembly) => CheckForNewVersion(url, parent, linkAnchor, assembly, false);
+        public static void CheckForNewVersion(string url, IWin32Window parent, string linkAnchor, Assembly assembly)
+            => CheckForNewVersion(url, parent, linkAnchor, assembly, false);
 
-        public static void CheckForNewVersion(string url, IWin32Window parent, string linkAnchor, Assembly assembly, Boolean silently)
+        public static void CheckForNewVersion(string url, IWin32Window parent, string linkAnchor, Assembly assembly, bool silently)
+            => CheckForNewVersionAsync(url, parent, linkAnchor, assembly, silently).GetAwaiter().GetResult();
+
+        private static async Task CheckForNewVersionAsync(string url, IWin32Window parent, string linkAnchor, Assembly assembly, bool silently)
         {
             if (parent == null)
             {
                 parent = new WindowHandle();
             }
 
-            WebResponse webResponse = null;
+            HttpResponseMessage webResponse = null;
             try
             {
-                webResponse = CreateSystemSettingsWebRequest(url);
+                webResponse = await GetSystemSettingsHttpResponse(url);
 
-                using (var stream = webResponse.GetResponseStream())
+                using (var stream = await webResponse.Content.ReadAsStreamAsync())
                 {
                     var versionInfos = DVDProfilerSerializer<VersionInfos>.Deserialize(stream);
 
@@ -62,7 +68,6 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
             {
                 try
                 {
-                    webResponse?.Close();
                     webResponse?.Dispose();
                 }
                 catch
@@ -76,63 +81,44 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
             }
         }
 
-        public static WebResponse CreateWebRequest(string targetUrl)
+        public static async Task<HttpResponseMessage> GetHttpResponse(string targetUrl)
         {
-            var webRequest = WebRequest.Create(targetUrl);
+            var handler = CreateHandler();
 
-            if (RegistryAccess.Proxy)
-            {
-                webRequest.Proxy = new WebProxy(RegistryAccess.Server, RegistryAccess.Port);
-
-                if (RegistryAccess.WindowsAuthentication)
-                {
-                    webRequest.Proxy.Credentials = System.Net.CredentialCache.DefaultNetworkCredentials;
-                }
-                else if (RegistryAccess.CustomAuthentication)
-                {
-                    if (string.IsNullOrEmpty(RegistryAccess.Domain))
-                    {
-                        webRequest.Proxy.Credentials = new NetworkCredential(RegistryAccess.Username, RegistryAccess.Password);
-                    }
-                    else
-                    {
-                        webRequest.Proxy.Credentials = new NetworkCredential(RegistryAccess.Username, RegistryAccess.Password, RegistryAccess.Domain);
-                    }
-                }
-            }
-
-            WebResponse webResponse;
             try
             {
-                webResponse = webRequest.GetResponse();
+                using (var client = new HttpClient(handler))
+                {
+                    var httpResponse = await client.GetAsync(targetUrl);
+
+                    return httpResponse;
+                }
             }
             catch (WebException)
             {
                 throw;
             }
-
-            return webResponse;
         }
 
-        public static WebResponse CreateSystemSettingsWebRequest(string targetUrl, CultureInfo cultureInfo = null)
+        public static async Task<HttpResponseMessage> GetSystemSettingsHttpResponse(string targetUrl, CultureInfo cultureInfo = null)
         {
-            var webRequest = WebRequest.Create(targetUrl);
-
-            if (cultureInfo != null)
-            {
-                var acceptLanguage = cultureInfo.TwoLetterISOLanguageName.ToLower();
-
-                webRequest.Headers["Accept-Language"] = acceptLanguage;
-            }
-
-            webRequest.Proxy = WebRequest.GetSystemWebProxy();
-            webRequest.Proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
+            var handler = CreateSystemSettingsHandler();
 
             try
             {
-                var webResponse = webRequest.GetResponse();
+                using (var client = new HttpClient(handler))
+                {
+                    if (cultureInfo != null)
+                    {
+                        var acceptLanguage = cultureInfo.TwoLetterISOLanguageName.ToLower();
 
-                return webResponse;
+                        client.DefaultRequestHeaders.Add("Accept-Language", acceptLanguage);
+                    }
+
+                    var httpResponse = await client.GetAsync(targetUrl);
+
+                    return httpResponse;
+                }
             }
             catch (WebException webEx)
             {
@@ -146,9 +132,9 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 
                         var newTargetUrl = $"{targetUri.Scheme}://{targetUri.Host}{redirectTo}";
 
-                        var webResponse = CreateSystemSettingsWebRequest(newTargetUrl, cultureInfo);
+                        var httpResponse = await GetSystemSettingsHttpResponse(newTargetUrl, cultureInfo);
 
-                        return webResponse;
+                        return httpResponse;
                     }
                 }
 
@@ -156,44 +142,57 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
             }
         }
 
-        public static WebClient CreateWebClient()
+        public static HttpClient CreateHttpClient()
         {
-            var webClient = new WebClient();
+            var handler = CreateHandler();
+
+            return new HttpClient(handler);
+        }
+
+        public static HttpClient CreateSystemSettingsHttpClient()
+        {
+            var handler = CreateSystemSettingsHandler();
+
+            return new HttpClient(handler);
+        }
+
+        private static HttpClientHandler CreateHandler()
+        {
+            var handler = new HttpClientHandler();
 
             if (RegistryAccess.Proxy)
             {
-                webClient.Proxy = new WebProxy(RegistryAccess.Server, RegistryAccess.Port);
+                handler.Proxy = new WebProxy(RegistryAccess.Server, RegistryAccess.Port);
 
                 if (RegistryAccess.WindowsAuthentication)
                 {
-                    webClient.Proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
+                    handler.Proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
                 }
                 else if (RegistryAccess.CustomAuthentication)
                 {
                     if (string.IsNullOrEmpty(RegistryAccess.Domain))
                     {
-                        webClient.Proxy.Credentials = new NetworkCredential(RegistryAccess.Username, RegistryAccess.Password);
+                        handler.Proxy.Credentials = new NetworkCredential(RegistryAccess.Username, RegistryAccess.Password);
                     }
                     else
                     {
-                        webClient.Proxy.Credentials = new NetworkCredential(RegistryAccess.Username, RegistryAccess.Password, RegistryAccess.Domain);
+                        handler.Proxy.Credentials = new NetworkCredential(RegistryAccess.Username, RegistryAccess.Password, RegistryAccess.Domain);
                     }
                 }
             }
 
-            return webClient;
+            return handler;
         }
 
-        public static WebClient CreateSystemSettingsWebClient()
+        private static HttpClientHandler CreateSystemSettingsHandler()
         {
-            var webClient = new WebClient
+            var handler = new HttpClientHandler()
             {
                 Proxy = WebRequest.GetSystemWebProxy(),
             };
 
-            webClient.Proxy.Credentials = System.Net.CredentialCache.DefaultNetworkCredentials;
-
-            return webClient;
+            handler.Proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
+            return handler;
         }
     }
 }

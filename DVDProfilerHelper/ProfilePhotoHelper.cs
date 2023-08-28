@@ -51,7 +51,7 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 
         private static int MiniHashFromString(string source)
         {
-            var hasher = new MD5CryptoServiceProvider();
+            var hasher = MD5.Create();
 
             var hash = 0;
 

@@ -1,203 +1,56 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{461DACCA-8EBF-4C03-AD1A-C438E4EB3B36}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DoenaSoft.DVDProfiler.DVDProfilerHelper</RootNamespace>
-    <AssemblyName>DoenaSoft.DVDProfilerHelper</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\x86\DVDProfilerHelper\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
-    <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>bin\x86\DVDProfilerHelper\DoenaSoft.DVDProfilerHelper.xml</DocumentationFile>
-    <NoWarn>CS1591</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>djdsoft.ico</ApplicationIcon>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Win32Resource>
-    </Win32Resource>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>DVDProfilerHelper.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>bin\x64\Debug\DoenaSoft.DVDProfilerHelper.xml</DocumentationFile>
-    <NoWarn>CS1591</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Optimize>true</Optimize>
-    <DocumentationFile>bin\x86\Release\DoenaSoft.DVDProfilerHelper.xml</DocumentationFile>
-    <NoWarn>1591</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Optimize>true</Optimize>
-    <DocumentationFile>bin\x64\Release\DoenaSoft.DVDProfilerHelper.xml</DocumentationFile>
-    <NoWarn>1591</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DocumentationFile>bin\Debug\DoenaSoft.DVDProfilerHelper.xml</DocumentationFile>
-    <NoWarn>CS1591</NoWarn>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <DocumentationFile>bin\Release\DoenaSoft.DVDProfilerHelper.xml</DocumentationFile>
-    <Optimize>true</Optimize>
-    <NoWarn>1591</NoWarn>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AboutBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AboutBox.Designer.cs">
-      <DependentUpon>AboutBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="EnhancedCOMException.cs" />
-    <Compile Include="ExceptionXml.cs" />
-    <Compile Include="HelpForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="HelpForm.designer.cs">
-      <DependentUpon>HelpForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NewVersionAvailableForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="NewVersionAvailableForm.Designer.cs">
-      <DependentUpon>NewVersionAvailableForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="OnlineAccess.cs" />
-    <Compile Include="ProfilePhotoHelper.cs" />
-    <Compile Include="ProgressWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ProgressWindow.Designer.cs">
-      <DependentUpon>ProgressWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="RegistryAccess.cs" />
-    <Compile Include="DVDProfilerSerializerT.cs" />
-    <Compile Include="TripleDES.cs" />
-    <Compile Include="VersionInfo.cs" />
-    <Compile Include="Utf8StringWriter.cs" />
-    <Compile Include="WindowHandle.cs" />
-    <Compile Include="XmlConvertHelper.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="DJDSOFT.ICO">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <EmbeddedResource Include="Properties\Resources.de.resx">
-      <DependentUpon>Resources.resx</DependentUpon>
-    </EmbeddedResource>
-    <None Include="DoenaSoft.DVDProfilerHelper.props" />
-    <None Include="DVDProfilerHelper.nuspec" />
-    <None Include="DVDProfilerHelper.snk" />
-    <None Include="Resources\djdsoft.ico" />
-    <None Include="Resources\doener.jpg" />
-    <None Include="djdsoft.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="AboutBox.resx">
-      <DependentUpon>AboutBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="HelpForm.resx">
-      <DependentUpon>HelpForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="NewVersionAvailableForm.de.resx">
-      <DependentUpon>NewVersionAvailableForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="NewVersionAvailableForm.resx">
-      <DependentUpon>NewVersionAvailableForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ProgressWindow.de.resx">
-      <DependentUpon>ProgressWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ProgressWindow.resx">
-      <DependentUpon>ProgressWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net472;net60-windows</TargetFrameworks>
+		<UseWindowsForms>true</UseWindowsForms>
+		<Platforms>AnyCPU</Platforms>
+		<OutputType>Library</OutputType>
+		<RootNamespace>DoenaSoft.DVDProfiler.DVDProfilerHelper</RootNamespace>
+		<AssemblyName>DoenaSoft.DVDProfilerHelper</AssemblyName>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<NoWarn>1701;1702;1591</NoWarn>
+		<SignAssembly>True</SignAssembly>
+		<AssemblyOriginatorKeyFile>DVDProfilerHelper.snk</AssemblyOriginatorKeyFile>
+		<Title>DoenaSoft.DVDProfilerHelper</Title>
+		<Company>Doena Soft.</Company>
+		<Authors>DJ Doena</Authors>
+		<Description>Helper functions for the DVD Profiler application by Invelos</Description>
+		<Copyright>2012 - 2023</Copyright>
+		<PackageProjectUrl>https://github.com/DJDoena/DVDProfilerHelper</PackageProjectUrl>
+		<PackageIcon>djdsoft.png</PackageIcon>
+		<RepositoryUrl>https://github.com/DJDoena/DVDProfilerHelper</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>dvd-profiler, dvdprofiler, invelos</PackageTags>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<Version>3.0.0</Version>
+		<FileVersion>3.0.0</FileVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="System.Net.Http" Version="4.3.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Properties\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Properties\Resources.de.resx">
+			<DependentUpon>Resources.resx</DependentUpon>
+		</EmbeddedResource>
+	</ItemGroup>
+
 </Project>

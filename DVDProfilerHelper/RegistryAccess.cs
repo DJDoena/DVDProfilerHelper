@@ -244,9 +244,6 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 
                         var guidBytes = System.Text.Encoding.UTF8.GetBytes(guid.Substring(0, 24));
 
-                        //ivBytes = new Byte[64];
-                        //guidBytes.CopyTo(ivBytes, 0);
-                        //guidBytes.CopyTo(ivBytes, 28);
                         var keyBytes = System.Text.Encoding.UTF8.GetBytes(key);
 
                         var des = new TripleDES(keyBytes, guidBytes);
@@ -271,9 +268,6 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 
                     var guidBytes = System.Text.Encoding.UTF8.GetBytes(guid.Substring(0, 24));
 
-                    //ivBytes = new Byte[64];
-                    //guidBytes.CopyTo(ivBytes, 0);
-                    //guidBytes.CopyTo(ivBytes, 28);
                     var keyBytes = System.Text.Encoding.UTF8.GetBytes(key);
 
                     var des = new TripleDES(keyBytes, guidBytes);
