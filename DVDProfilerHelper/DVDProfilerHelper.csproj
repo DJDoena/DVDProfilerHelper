@@ -18,7 +18,7 @@
 		<Description>Helper functions for the DVD Profiler application by Invelos</Description>
 		<Copyright>2012 - 2023</Copyright>
 		<PackageProjectUrl>https://github.com/DJDoena/DVDProfilerHelper</PackageProjectUrl>
-		<PackageIcon>djdsoft.png</PackageIcon>
+		<PackageIcon>..\djdsoft.png</PackageIcon>
 		<RepositoryUrl>https://github.com/DJDoena/DVDProfilerHelper</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageTags>dvd-profiler, dvdprofiler, invelos</PackageTags>
