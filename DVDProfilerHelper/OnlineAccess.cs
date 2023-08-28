@@ -23,7 +23,7 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
                     _webServices = new WebServices();
                 }
 
-                return WebServices;
+                return _webServices;
             }
         }
 
@@ -109,7 +109,7 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
             IWebResponse webResponse;
             try
             {
-                webResponse = await webRequest.GetResponseAsync();
+                webResponse = await webRequest.GetResponseAsync().ConfigureAwait(false);
 
                 return webResponse;
             }
@@ -127,7 +127,7 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 
             try
             {
-                var webResponse = await webRequest.GetResponseAsync();
+                var webResponse = await webRequest.GetResponseAsync().ConfigureAwait(false);
 
                 return webResponse;
             }
@@ -143,7 +143,7 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 
                         var newTargetUrl = $"{targetUri.Scheme}://{targetUri.Host}{redirectTo}";
 
-                        var webResponse = await GetSystemSettingsWebResponseAsync(newTargetUrl, cultureInfo);
+                        var webResponse = await GetSystemSettingsWebResponseAsync(newTargetUrl, cultureInfo).ConfigureAwait(false);
 
                         return webResponse;
                     }
