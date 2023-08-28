@@ -3,6 +3,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>net472</TargetFrameworks>
 		<UseWindowsForms>true</UseWindowsForms>
+		<GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
 		<Platforms>AnyCPU</Platforms>
 		<OutputType>Library</OutputType>
 		<RootNamespace>DoenaSoft.DVDProfiler.DVDProfilerHelper</RootNamespace>
@@ -30,6 +31,7 @@
 		<PackageReference Include="DoenaSoft.AbstractionLayer.Web" Version="1.0.2" />
 		<PackageReference Include="DoenaSoft.ToolBox" Version="2.0.0" />
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
+		<PackageReference Include="System.Resources.Extensions" Version="7.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
