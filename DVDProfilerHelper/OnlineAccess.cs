@@ -14,14 +14,28 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
     {
         private static IWebServices _webServices;
 
+        private static IWebServices WebServices
+        {
+            get
+            {
+                if (_webServices == null)
+                {
+                    _webServices = new WebServices();
+                }
+
+                return WebServices;
+            }
+        }
+
         public static void Init(string company, string product, IWebServices webServices = null)
         {
             RegistryAccess.Init(company, product);
 
-            _webServices = webServices ?? new WebServices();
+            _webServices = webServices;
         }
 
-        public static void CheckForNewVersion(string url, IWin32Window parent, string linkAnchor, Assembly assembly) => CheckForNewVersion(url, parent, linkAnchor, assembly, false);
+        public static void CheckForNewVersion(string url, IWin32Window parent, string linkAnchor, Assembly assembly)
+            => CheckForNewVersion(url, parent, linkAnchor, assembly, false);
 
         public static void CheckForNewVersion(string url, IWin32Window parent, string linkAnchor, Assembly assembly, bool silently)
         {
@@ -90,7 +104,7 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
         {
             var proxy = BuildWebProxy();
 
-            var webRequest = _webServices.CreateWebRequest(targetUrl, proxy);
+            var webRequest = WebServices.CreateWebRequest(targetUrl, proxy);
 
             IWebResponse webResponse;
             try
@@ -109,7 +123,7 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
         {
             var proxy = BuildSystemWebProxy();
 
-            var webRequest = _webServices.CreateWebRequest(targetUrl, proxy, cultureInfo);
+            var webRequest = WebServices.CreateWebRequest(targetUrl, proxy, cultureInfo);
 
             try
             {
@@ -143,7 +157,7 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
         {
             var proxy = BuildWebProxy();
 
-            var webClient = _webServices.CreateWebClient(proxy);
+            var webClient = WebServices.CreateWebClient(proxy);
 
             return webClient;
         }
@@ -152,7 +166,7 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
         {
             var proxy = BuildSystemWebProxy();
 
-            var webClient = _webServices.CreateWebClient(proxy);
+            var webClient = WebServices.CreateWebClient(proxy);
 
             return webClient;
         }
