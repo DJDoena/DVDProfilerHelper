@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DoenaSoft.DVDProfiler.DVDProfilerHelper.Properties;
+using DoenaSoft.ToolBox.Generics;
 
 namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 {
@@ -33,7 +34,7 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 
                 using (var stream = await webResponse.Content.ReadAsStreamAsync())
                 {
-                    var versionInfos = DVDProfilerSerializer<VersionInfos>.Deserialize(stream);
+                    var versionInfos = Serializer<VersionInfos>.Deserialize(stream);
 
                     if ((versionInfos.VersionInfoList != null) && (versionInfos.VersionInfoList.Length > 0))
                     {

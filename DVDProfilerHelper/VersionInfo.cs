@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Xml;
+using DoenaSoft.ToolBox.Generics;
 
 namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 {
@@ -23,7 +24,7 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
                     xmlWriter.WriteProcessingInstruction("xml", "version=\"1.0\" encoding=\"utf-8\"");
                     xmlWriter.WriteProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"versions.xsl\"");
 
-                    DVDProfilerSerializer<VersionInfos>.Serialize(xmlWriter, this);
+                    Serializer<VersionInfos>.Serialize(xmlWriter, this);
                 }
             }
         }
