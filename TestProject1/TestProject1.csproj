@@ -16,7 +16,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\DVDProfilerHelper\DVDProfilerHelper.csproj" />
+		<ProjectReference Include="..\DVDProfilerHelper\DVDProfiler.Helper.csproj" />
 	</ItemGroup>
 
 </Project>
