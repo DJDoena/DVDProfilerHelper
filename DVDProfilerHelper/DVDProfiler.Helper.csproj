@@ -23,10 +23,11 @@
 		<RepositoryType>git</RepositoryType>
 		<PackageTags>dvd-profiler, dvdprofiler, invelos</PackageTags>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<Version>3.0.7</Version>
-		<FileVersion>3.0.7</FileVersion>
+		<Version>3.0.8</Version>
+		<FileVersion>3.0.8</FileVersion>
 		<DebugType>portable</DebugType>
 		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	</PropertyGroup>
 	
 	<ItemGroup>
@@ -37,8 +38,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="DoenaSoft.AbstractionLayer.Web" Version="1.0.9" />
-		<PackageReference Include="DoenaSoft.ToolBox" Version="2.0.1" />
+		<PackageReference Include="DoenaSoft.AbstractionLayer.Web" Version="1.0.10" />
+		<PackageReference Include="DoenaSoft.ToolBox" Version="2.0.2" />
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
 		<PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
 	</ItemGroup>
