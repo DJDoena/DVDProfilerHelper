@@ -1,5 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+	<PropertyGroup Condition="'$(Framework)'=='net6.0-windows'">
+		<GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Framework)'=='net8.0-windows'">
+		<GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+	</PropertyGroup>
+
 	<PropertyGroup>
 		<AssemblyName>DoenaSoft.DVDProfiler.Helper</AssemblyName>
 		<RootNamespace>DoenaSoft.DVDProfiler.DVDProfilerHelper</RootNamespace>
