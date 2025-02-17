@@ -30,7 +30,7 @@ jobs:
           NUGET_AUTH_TOKEN: ${{secrets.NUGET_API_KEY}}
 
       - name: Build AnyCPU
-        run: dotnet build ${{env.PROJECT_FOLDER}}/${{env.PROJECT_FILE}} -c=${{env.BUILD_CONFIGURATION}} --no-incremental /p:Platform=AnyCPU
+        run: msbuild build ${{env.PROJECT_FOLDER}}/${{env.PROJECT_FILE}} -c=${{env.BUILD_CONFIGURATION}} --no-incremental /p:Platform=AnyCPU
 
       - name: Pack
         run: dotnet pack ${{ env.PROJECT_FOLDER }}/${{ env.PROJECT_FILE }} --no-build -c=${{env.BUILD_CONFIGURATION}} -o=./${{env.PROJECT_FOLDER}}/ -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
