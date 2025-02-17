@@ -48,4 +48,4 @@ jobs:
         run: dotnet pack ${{ env.PROJECT_FOLDER }}/${{ env.PROJECT_FILE }} --no-build -c=${{env.BUILD_CONFIGURATION}} -o=./${{env.PROJECT_FOLDER}}/ -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
           
       - name: Push generated package to Nuget.org
-        run: dotnet nuget push ${{env.PROJECT_FOLDER}}/*.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source "${{env.SOURCE_URL}}" --skip-duplicate
+        run: dotnet nuget push ${{env.PROJECT_FOLDER}}\*.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source "${{env.SOURCE_URL}}" --skip-duplicate
