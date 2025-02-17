@@ -17,13 +17,13 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 
             if (args?.Name.StartsWith($"{ExtensionAssemblyFileName},") == true)
             {
-                var thisAssemblyFile = new FileInfo(typeof(DVDProfilerHelperAssemblyLoader).Assembly.Location);
+                var thisFile = new FileInfo(typeof(DVDProfilerHelperAssemblyLoader).Assembly.Location);
 
-                var extensionsAssemblyFile = new FileInfo(Path.Combine(thisAssemblyFile.DirectoryName, $"{ExtensionAssemblyFileName}.dll"));
+                var extensionsFile = new FileInfo(Path.Combine(thisFile.DirectoryName, $"{ExtensionAssemblyFileName}.dll"));
 
-                if (File.Exists(extensionsAssemblyFile.FullName))
+                if (extensionsFile.Exists)
                 {
-                    var extensionsAssembly = Assembly.LoadFrom(extensionsAssemblyFile.FullName);
+                    var extensionsAssembly = Assembly.LoadFrom(extensionsFile.FullName);
 
                     return extensionsAssembly;
                 }
