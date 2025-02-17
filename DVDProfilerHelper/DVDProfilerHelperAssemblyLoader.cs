@@ -6,9 +6,21 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 {
     public static class DVDProfilerHelperAssemblyLoader
     {
+        private static bool _isRegistered;
+
+        static DVDProfilerHelperAssemblyLoader()
+        {
+            _isRegistered = false;
+        }
+
         public static void Load()
         {
-            AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
+            if (!_isRegistered)
+            {
+                AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
+
+                _isRegistered = true;
+            }
         }
 
         private static Assembly OnAssemblyResolve(object sender, ResolveEventArgs args)
