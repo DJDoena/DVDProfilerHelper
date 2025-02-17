@@ -1,45 +1,44 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net472;net6.0-windows;net8.0-windows</TargetFrameworks>
-		<UseWindowsForms>true</UseWindowsForms>
-		<GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
-		<Platforms>AnyCPU</Platforms>
-		<OutputType>Library</OutputType>
-		<RootNamespace>DoenaSoft.DVDProfiler.DVDProfilerHelper</RootNamespace>
 		<AssemblyName>DoenaSoft.DVDProfiler.Helper</AssemblyName>
+		<RootNamespace>DoenaSoft.DVDProfiler.DVDProfilerHelper</RootNamespace>
+		<OutputType>Library</OutputType>
+		<TargetFrameworks>net472;net6.0-windows;net8.0-windows</TargetFrameworks>
+		<Platforms>AnyCPU</Platforms>
+		<UseWindowsForms>true</UseWindowsForms>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<DebugType>portable</DebugType>
+		<IncludeSymbols>true</IncludeSymbols>
 		<NoWarn>1701;1702;1591</NoWarn>
 		<SignAssembly>True</SignAssembly>
 		<AssemblyOriginatorKeyFile>DVDProfilerHelper.snk</AssemblyOriginatorKeyFile>
 		<Title>DoenaSoft.DVDProfiler.Helper</Title>
-		<Company>Doena Soft.</Company>
-		<Authors>DJ Doena</Authors>
-		<Description>Helper functions for the DVD Profiler application by Invelos</Description>
-		<Copyright>2012 - 2024</Copyright>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/DJDoena/DVDProfilerHelper</PackageProjectUrl>
-		<PackageIcon>djdsoft.png</PackageIcon>
 		<RepositoryUrl>https://github.com/DJDoena/DVDProfilerHelper</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageTags>dvd-profiler, dvdprofiler, invelos</PackageTags>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<Version>3.0.9</Version>
-		<FileVersion>3.0.9</FileVersion>
-		<DebugType>portable</DebugType>
-		<IncludeSymbols>true</IncludeSymbols>
+		<PackageIcon>djdsoft.png</PackageIcon>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<Description>Helper functions for the DVD Profiler application by Invelos</Description>
+		<Company>Doena Soft.</Company>
+		<Authors>DJ Doena</Authors>
+		<Copyright>2012 - 2025</Copyright>
+		<Version>3.0.10</Version>
+		<FileVersion>3.0.10</FileVersion>
 	</PropertyGroup>
-	
+
 	<ItemGroup>
-	  <None Include="..\djdsoft.png">
-	    <Pack>True</Pack>
-	    <PackagePath>\</PackagePath>
-	  </None>
+		<None Include="..\djdsoft.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="DoenaSoft.AbstractionLayer.Web" Version="1.0.10" />
-		<PackageReference Include="DoenaSoft.ToolBox" Version="2.0.2" />
+		<PackageReference Include="DoenaSoft.ToolBox" Version="3.0.1" />
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
 		<PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
 	</ItemGroup>

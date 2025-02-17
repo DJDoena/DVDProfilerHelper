@@ -51,7 +51,7 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
 
                 using (var stream = webResponse.GetResponseStream())
                 {
-                    var versionInfos = Serializer<VersionInfos>.Deserialize(stream);
+                    var versionInfos = XmlSerializer<VersionInfos>.Deserialize(stream);
 
                     if ((versionInfos.VersionInfoList != null) && (versionInfos.VersionInfoList.Length > 0))
                     {
