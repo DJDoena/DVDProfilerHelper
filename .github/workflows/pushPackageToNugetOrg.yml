@@ -21,29 +21,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
-      - name: Setup Nuget
-        uses: nuget/setup-nuget@v2
-        with:
-          nuget-api-key: ${{secrets.NUGET_API_KEY}}
-          nuget-version: 'latest'
      
-      - name: Restore Nuget
-        run: nuget.exe restore ${{ env.SOLUTION_FILE }}
-     
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v2
-
-      - name: Build AnyCPU
-        run: msbuild ${{env.PROJECT_FOLDER}}/${{env.PROJECT_FILE}} -p:Configuration=${{env.BUILD_CONFIGURATION}} -p:Platform=AnyCPU
-      
       - name: Setup dotnet
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v2
         with:
           source-url: ${{env.SOURCE_URL}}  
         env:
           NUGET_AUTH_TOKEN: ${{secrets.NUGET_API_KEY}}
 
+      - name: Build AnyCPU
+        run: dotnet build ${{env.PROJECT_FOLDER}}/${{env.PROJECT_FILE}} -c=${{env.BUILD_CONFIGURATION}} --no-incremental /p:Platform=AnyCPU
       - name: Pack
         run: dotnet pack ${{ env.PROJECT_FOLDER }}/${{ env.PROJECT_FILE }} --no-build -c=${{env.BUILD_CONFIGURATION}} -o=./${{env.PROJECT_FOLDER}}/ -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
           

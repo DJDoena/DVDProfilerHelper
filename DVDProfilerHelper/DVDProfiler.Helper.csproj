@@ -1,12 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup Condition="'$(Framework)'=='net6.0-windows'">
-		<GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Framework)'=='net8.0-windows'">
-		<GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
-	</PropertyGroup>
-
 	<PropertyGroup>
 		<AssemblyName>DoenaSoft.DVDProfiler.Helper</AssemblyName>
 		<RootNamespace>DoenaSoft.DVDProfiler.DVDProfilerHelper</RootNamespace>
@@ -14,6 +7,7 @@
 		<TargetFrameworks>net472;net6.0-windows;net8.0-windows</TargetFrameworks>
 		<Platforms>AnyCPU</Platforms>
 		<UseWindowsForms>true</UseWindowsForms>
+		<GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<DebugType>portable</DebugType>
 		<IncludeSymbols>true</IncludeSymbols>
@@ -32,8 +26,8 @@
 		<Company>Doena Soft.</Company>
 		<Authors>DJ Doena</Authors>
 		<Copyright>2012 - 2025</Copyright>
-		<Version>3.0.10</Version>
-		<FileVersion>3.0.10</FileVersion>
+		<Version>3.0.11</Version>
+		<FileVersion>3.0.11</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -48,6 +42,7 @@
 		<PackageReference Include="DoenaSoft.ToolBox" Version="3.0.1" />
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
 		<PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
+		<PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.3" />
 	</ItemGroup>
 
 	<ItemGroup>
