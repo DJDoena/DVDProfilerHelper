@@ -25,9 +25,9 @@
 		<Description>Helper functions for the DVD Profiler application by Invelos</Description>
 		<Company>Doena Soft.</Company>
 		<Authors>DJ Doena</Authors>
-		<Copyright>2012 - 2025</Copyright>
-		<Version>3.0.13</Version>
-		<FileVersion>3.0.13</FileVersion>
+		<Copyright>Copyright © Doena Soft. 2012 - 2025</Copyright>
+		<Version>3.0.14</Version>
+		<FileVersion>3.0.14</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -39,9 +39,9 @@
 
 	<ItemGroup>
 		<PackageReference Include="DoenaSoft.AbstractionLayer.Web" Version="1.0.10" />
-		<PackageReference Include="DoenaSoft.ToolBox" Version="3.0.2" />
+		<PackageReference Include="DoenaSoft.ToolBox" Version="3.0.3" />
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
-		<PackageReference Include="System.Resources.Extensions" Version="10.0.0" />
+		<PackageReference Include="System.Resources.Extensions" Version="10.0.1" />
 		<PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" />
 	</ItemGroup>
 
