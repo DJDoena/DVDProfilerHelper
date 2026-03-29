@@ -1,19 +1,20 @@
-﻿using System.Windows.Forms;
+﻿using System.ComponentModel;
+using System.Windows.Forms;
 
-namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
+namespace DoenaSoft.DVDProfiler.DVDProfilerHelper;
+
+public partial class ProgressWindow : Form
 {
-    public partial class ProgressWindow : Form
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public bool CanClose { get; set; }
+
+    public ProgressWindow()
     {
-        public bool CanClose { get; set; }
+        this.InitializeComponent();
+    }
 
-        public ProgressWindow()
-        {
-            InitializeComponent();
-        }
-
-        private void OnProgressWindowFormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = !CanClose;
-        }
+    private void OnProgressWindowFormClosing(object sender, FormClosingEventArgs e)
+    {
+        e.Cancel = !this.CanClose;
     }
 }
