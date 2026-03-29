@@ -34,10 +34,35 @@ namespace DoenaSoft.DVDProfiler.DVDProfilerHelper
             _webServices = webServices;
         }
 
-        public static void CheckForNewVersion(string url, IWin32Window parent, string linkAnchor, Assembly assembly)
-            => CheckForNewVersion(url, parent, linkAnchor, assembly, false);
+        public static void CheckForNewVersion(string url
+            , IWin32Window parent
+            , string linkAnchor
+            , Assembly assembly)
+            => CheckForNewVersionInternal(url, parent, linkAnchor, assembly, false);
 
-        public static void CheckForNewVersion(string url, IWin32Window parent, string linkAnchor, Assembly assembly, bool silently)
+        public static void CheckForNewVersion(string url
+            , string linkAnchor
+            , Assembly assembly)
+            => CheckForNewVersionInternal(url, null, linkAnchor, assembly, false);
+
+        public static void CheckForNewVersion(string url
+            , IWin32Window parent
+            , string linkAnchor
+            , Assembly assembly
+            , bool silently)
+            => CheckForNewVersionInternal(url, parent, linkAnchor, assembly, silently);
+
+        public static void CheckForNewVersion(string url
+            , string linkAnchor
+            , Assembly assembly
+            , bool silently)
+            => CheckForNewVersionInternal(url, null, linkAnchor, assembly, silently);
+
+        private static void CheckForNewVersionInternal(string url
+            , IWin32Window parent
+            , string linkAnchor
+            , Assembly assembly
+            , bool silently)
         {
             if (parent == null)
             {

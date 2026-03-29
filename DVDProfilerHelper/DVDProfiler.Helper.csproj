@@ -25,9 +25,9 @@
 		<Description>Helper functions for the DVD Profiler application by Invelos</Description>
 		<Company>Doena Soft.</Company>
 		<Authors>DJ Doena</Authors>
-		<Copyright>Copyright © Doena Soft. 2012 - 2025</Copyright>
-		<Version>3.0.14</Version>
-		<FileVersion>3.0.14</FileVersion>
+		<Copyright>Copyright © Doena Soft. 2012 - 2026</Copyright>
+		<Version>3.0.15</Version>
+		<FileVersion>3.0.15</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
