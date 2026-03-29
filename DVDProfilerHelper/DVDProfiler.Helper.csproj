@@ -28,8 +28,8 @@
 		<Company>Doena Soft.</Company>
 		<Authors>DJ Doena</Authors>
 		<Copyright>Copyright © Doena Soft. 2012 - 2026</Copyright>
-		<Version>4.0.0</Version>
-		<FileVersion>4.0.0</FileVersion>
+		<Version>4.0.1</Version>
+		<FileVersion>4.0.1</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -45,7 +45,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="DoenaSoft.AbstractionLayer.Web.Default" Version="1.0.0" />
-		<PackageReference Include="DoenaSoft.ToolBox" Version="3.0.3" />
+		<PackageReference Include="DoenaSoft.ToolBox" Version="3.0.4" />
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
 		<PackageReference Include="System.Resources.Extensions" Version="10.0.5" />
 		<PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" />
